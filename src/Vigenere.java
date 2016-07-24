@@ -1,12 +1,12 @@
 import java.io.*;
 
-/**
- * Created by aris on 7/1/2016.
- */
+
 public class Vigenere
 {
+    //Key used to encrypt the plaintext
     static String key = "crypto";
 
+    //Line separator depends on the platform the program is running
     final static String eol = System.getProperty("line.separator");
 
     public static void main(String[] args)
@@ -21,14 +21,15 @@ public class Vigenere
 
             int[] keyInts = convertStringToStreamOfInts(keyContents);
 
-            System.out.println();
-
             int[] vigener = Vigenere(keyInts, plaintextInts);
 
-            System.out.println(convertStreamOfIntsToString(vigener));
+            char[] ciph = convertStreamOfIntsToString(vigener);
 
+            String cipher = processVigenereOutput(ciph);
 
-            //     Vigenere(plaintextInts);
+            System.out.println(cipher);
+
+            //System.out.println(convertStreamOfIntsToString(vigener));
 
         }
         catch (Exception e)
@@ -43,7 +44,7 @@ public class Vigenere
         {
             String fileContents = fileToString("deciphered.txt");
 
-            fileContents = capitaliseFile(fileContents);
+            fileContents = fileContents.toUpperCase();
 
             fileContents = removeNonAlphabetical(fileContents);
 
@@ -59,9 +60,15 @@ public class Vigenere
         return null;
     }
 
+    /**
+     * Method converting a String to
+     *
+     * @param key
+     * @return
+     */
     protected static char[] processKey(String key)
     {
-        key = capitaliseFile(key);
+        key = key.toUpperCase();
 
         key = removeNonAlphabetical(key);
 
@@ -70,6 +77,12 @@ public class Vigenere
         return keyContents;
     }
 
+    /**
+     * Reading a file and storing its contents into a String
+     *
+     * @param filename The name of the file to be read
+     * @return A string containing the contents of the file
+     */
     protected static String fileToString(String filename)
     {
         try
@@ -104,6 +117,12 @@ public class Vigenere
 
     }
 
+    /**
+     * Process a String, replacing all non alphabetical characters
+     *
+     * @param unprocessedString The String to be processed
+     * @return The input String stipped off any non-alphabetical characters
+     */
     protected static String removeNonAlphabetical(String unprocessedString)
     {
         unprocessedString = unprocessedString.replaceAll("\\W", "");
@@ -113,11 +132,24 @@ public class Vigenere
         return unprocessedString;
     }
 
+    /**
+     * Process a String
+     *
+     * @param line
+     * @return
+     */
     protected static String capitaliseFile(String line)
     {
         return line.toUpperCase();
     }
 
+    /**
+     * Encrypts a plaintext using the Vigenere crypto-algorithm
+     *
+     * @param key       An array of ints representing they key to be used
+     * @param plaintext A array of ints containing the plaintext to be encrypted
+     * @return An array of ints containing the ciphertext
+     */
     protected static int[] Vigenere(int[] key, int[] plaintext)
     {
         int[] ciphertext = new int[plaintext.length];
@@ -136,7 +168,7 @@ public class Vigenere
                         ciphertext[i] = ciphertext[i] % 26;
                     }
 
-                    if(i<plaintext.length)
+                    if (i < plaintext.length)
                     {
                         i++;
                     }
@@ -185,6 +217,12 @@ public class Vigenere
         return streamOfInts;
     }
 
+    /**
+     * Converts a an array of ints to an array of characters by replacing its int with its corresponding character
+     *
+     * @param ciphertext
+     * @return
+     */
     protected static char[] convertStreamOfIntsToString(int[] ciphertext)
     {
         char[] chararray = new char[ciphertext.length];
@@ -196,9 +234,29 @@ public class Vigenere
         return chararray;
     }
 
-    protected static void processVigenereOutput()
+    protected static String processVigenereOutput(char[] ciphertextChars)
     {
+        String plaintext = fileToString("deciphered.txt");
 
+        String ciphertext="";
+
+        int j = 0;
+
+        for (int i = 0; i < plaintext.length(); i++)
+        {
+            if ( Character.isLetter(plaintext.charAt(i)) )
+            {
+                ciphertext = ciphertext + ciphertextChars[j];
+
+                j++;
+            }
+            else
+            {
+                ciphertext = ciphertext + plaintext.charAt(i);
+            }
+        }
+
+        return ciphertext ;
     }
 
 }
