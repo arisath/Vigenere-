@@ -13,7 +13,7 @@ public class Vigenere
     {
         try
         {
-            char[] fileContents = processFile("deciphered.txt");
+            char[] fileContents = processFile("plaintext.txt");
 
             char[] keyContents = processKey(key);
 
@@ -41,7 +41,7 @@ public class Vigenere
     {
         try
         {
-            String fileContents = fileToString("deciphered.txt");
+            String fileContents = fileToString("plaintext.txt");
 
             fileContents = fileContents.toUpperCase();
 
@@ -86,7 +86,7 @@ public class Vigenere
     {
         try
         {
-            FileReader input = new FileReader("deciphered.txt");
+            FileReader input = new FileReader("plaintext.txt");
 
             BufferedReader br = new BufferedReader(input);
 
@@ -236,7 +236,7 @@ public class Vigenere
 
     protected static String processVigenereOutput(char[] ciphertextChars)
     {
-        String plaintext = fileToString("deciphered.txt");
+        String plaintext = fileToString("plaintext.txt");
 
         String ciphertext = "";
 
