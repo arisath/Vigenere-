@@ -29,7 +29,6 @@ public class Vigenere
 
             System.out.println(cipher);
 
-            //System.out.println(convertStreamOfIntsToString(vigener));
 
         }
         catch (Exception e)
@@ -157,10 +156,12 @@ public class Vigenere
         try
         {
             int i = 0;
+
             while (i < plaintext.length)
             {
                 for (int j = 0; j < key.length; j++)
                 {
+
                     ciphertext[i] = plaintext[i] + key[j];
 
                     if (ciphertext[i] > 25)
@@ -168,14 +169,13 @@ public class Vigenere
                         ciphertext[i] = ciphertext[i] % 26;
                     }
 
-                    if (i < plaintext.length)
-                    {
-                        i++;
-                    }
-                    else
+                    i++;
+
+                    if (i == (plaintext.length))
                     {
                         break;
                     }
+
                 }
             }
 
@@ -238,13 +238,13 @@ public class Vigenere
     {
         String plaintext = fileToString("deciphered.txt");
 
-        String ciphertext="";
+        String ciphertext = "";
 
         int j = 0;
 
         for (int i = 0; i < plaintext.length(); i++)
         {
-            if ( Character.isLetter(plaintext.charAt(i)) )
+            if (Character.isLetter(plaintext.charAt(i)))
             {
                 ciphertext = ciphertext + ciphertextChars[j];
 
@@ -256,7 +256,7 @@ public class Vigenere
             }
         }
 
-        return ciphertext ;
+        return ciphertext;
     }
 
 }
