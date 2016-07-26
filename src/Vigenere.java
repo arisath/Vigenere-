@@ -25,7 +25,21 @@ public class Vigenere
 
             char[] ciph = convertStreamOfIntsToString(vigener);
 
-            processVigenereOutput(ciph);
+            printCiphertext(ciph,"ciphertext.txt");
+
+            ///////////////////////////////////////////////
+
+            char[]  ciphertextContents = processFile("ciphertext.txt");
+
+            int[] ciphertextInts = convertStringToStreamOfInts(ciphertextContents);
+
+            int[] vigenerCiphertext = vigenereDecrytpt(keyInts, ciphertextInts);
+
+            char[] plain = convertStreamOfIntsToString(vigenerCiphertext);
+
+            printPlaintext(plain,"plaintext2.txt");
+
+
 
         }
         catch (Exception e)
@@ -38,7 +52,7 @@ public class Vigenere
     {
         try
         {
-            String fileContents = fileToString("plaintext.txt");
+            String fileContents = fileToString(filename);
 
             fileContents = fileContents.toUpperCase();
 
@@ -83,7 +97,7 @@ public class Vigenere
     {
         try
         {
-            FileReader input = new FileReader("plaintext.txt");
+            FileReader input = new FileReader(filename);
 
             BufferedReader br = new BufferedReader(input);
 
@@ -231,11 +245,11 @@ public class Vigenere
         return chararray;
     }
 
-    protected static void processVigenereOutput(char[] ciphertextChars)
+    protected static void printCiphertext(char[] ciphertextChars, String filename)
     {
         try
         {
-            PrintWriter writer = new PrintWriter("ciphertext.txt");
+            PrintWriter writer = new PrintWriter(filename);
 
             String plaintext = fileToString("plaintext.txt");
 
@@ -303,6 +317,43 @@ public class Vigenere
             e.printStackTrace();
         }
         return null;
+    }
+
+
+    protected static void printPlaintext(char[] plaintextChars, String filename)
+    {
+        try
+        {
+            PrintWriter writer = new PrintWriter(filename);
+
+            String ciphertext = fileToString("ciphertext.txt");
+
+            String plaintext = "";
+
+            int j = 0;
+
+            for (int i = 0; i < ciphertext.length(); i++)
+            {
+                if (Character.isLetter(ciphertext.charAt(i)))
+                {
+                    plaintext = plaintext + plaintextChars[j];
+
+                    j++;
+                }
+                else
+                {
+                    plaintext = plaintext + ciphertext.charAt(i);
+                }
+            }
+
+            writer.print(plaintext);
+
+            writer.close();
+        }
+        catch (FileNotFoundException e)
+        {
+            System.out.println("File not found");
+        }
     }
 
 }
