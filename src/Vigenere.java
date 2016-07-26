@@ -3,9 +3,9 @@ import java.io.*;
 public class Vigenere
 {
     //Key used to encrypt the plaintext
-    protected static final String plaintext = "deciphered.txt";
-    protected static final String ciphertext = "ciphertext.txt";
-    protected static final String key = "crypto";
+     static final String plaintext = "deciphered.txt";
+     static final String ciphertext = "ciphertext.txt";
+     static final String key = "crypto";
 
     //Line separator depends on the platform the program is running
     final static String eol = System.getProperty("line.separator");
@@ -117,17 +117,6 @@ public class Vigenere
     }
 
     /**
-     * Process a String
-     *
-     * @param line
-     * @return
-     */
-    protected static String capitaliseFile(String line)
-    {
-        return line.toUpperCase();
-    }
-
-    /**
      * Encrypts a plaintext using the Vigenere crypto-algorithm
      *
      * @param key       An array of ints representing they key to be used
@@ -206,11 +195,11 @@ public class Vigenere
         return chararray;
     }
 
-    protected static void printCiphertext(char[] ciphertextChars, String filename)
+    protected static void printCiphertext(char[] ciphertextChars, String outputFileName)
     {
         try
         {
-            PrintWriter writer = new PrintWriter(filename);
+            PrintWriter writer = new PrintWriter(outputFileName);
             String decrypted = fileToString(plaintext);
             String ciphertext = "";
             int j = 0;
@@ -263,11 +252,11 @@ public class Vigenere
         return null;
     }
 
-    protected static void printPlaintext(char[] plaintextChars, String filename)
+    protected static void printPlaintext(char[] plaintextChars, String outputFileName)
     {
         try
         {
-            PrintWriter writer = new PrintWriter(filename);
+            PrintWriter writer = new PrintWriter(outputFileName);
             String encryptedText = fileToString(ciphertext);
             String plaintext = "";
             int j = 0;
@@ -289,6 +278,10 @@ public class Vigenere
         catch (FileNotFoundException e)
         {
             System.out.println("File not found");
+        }
+        catch (NullPointerException e)
+        {
+            System.out.println("Ciphertext is empty");
         }
     }
 }
