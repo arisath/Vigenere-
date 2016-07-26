@@ -1,34 +1,45 @@
 import java.io.*;
+
 public class Vigenere
 {
     //Key used to encrypt the plaintext
-    static String key = "crypto";
+    protected static final String plaintext = "deciphered.txt";
+    protected static final String ciphertext = "ciphertext.txt";
+    protected static final String key = "crypto";
+
     //Line separator depends on the platform the program is running
     final static String eol = System.getProperty("line.separator");
+
     public static void main(String[] args)
     {
         try
         {
-            char[] fileContents = processFile("deciphered.txt");
+            //Process Key
             char[] keyContents = processKey(key);
-            int[] plaintextInts = convertStringToStreamOfInts(fileContents);
             int[] keyInts = convertStringToStreamOfInts(keyContents);
+
+            //Encryption
+            char[] plaintextContents = preprocessFile(plaintext);
+            int[] plaintextInts = convertStringToStreamOfInts(plaintextContents);
             int[] vigener = Vigenere(keyInts, plaintextInts);
             char[] ciph = convertStreamOfIntsToString(vigener);
-            printCiphertext(ciph,"ciphertext.txt");
-///////////////////////////////////////////////
-            char[] ciphertextContents = processFile("ciphertext.txt");
+            printCiphertext(ciph, ciphertext);
+
+            //Decryption
+            char[] ciphertextContents = preprocessFile(ciphertext);
             int[] ciphertextInts = convertStringToStreamOfInts(ciphertextContents);
             int[] vigenerCiphertext = vigenereDecrytpt(keyInts, ciphertextInts);
             char[] plain = convertStreamOfIntsToString(vigenerCiphertext);
-            printPlaintext(plain,"plaintext2.txt");
+            printPlaintext(plain, "plaintext2.txt");
+
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
     }
-    protected static char[] processFile(String filename)
+
+    protected static char[] preprocessFile(String filename)
     {
         try
         {
@@ -44,6 +55,7 @@ public class Vigenere
         }
         return null;
     }
+
     /**
      * Method converting a String to
      *
@@ -57,6 +69,7 @@ public class Vigenere
         char[] keyContents = key.toCharArray();
         return keyContents;
     }
+
     /**
      * Reading a file and storing its contents into a String
      *
@@ -89,6 +102,7 @@ public class Vigenere
         }
         return null;
     }
+
     /**
      * Process a String, replacing all non alphabetical characters
      *
@@ -101,6 +115,7 @@ public class Vigenere
         unprocessedString = unprocessedString.replaceAll("[0-9]", "");
         return unprocessedString;
     }
+
     /**
      * Process a String
      *
@@ -111,10 +126,11 @@ public class Vigenere
     {
         return line.toUpperCase();
     }
+
     /**
      * Encrypts a plaintext using the Vigenere crypto-algorithm
      *
-     * @param key An array of ints representing they key to be used
+     * @param key       An array of ints representing they key to be used
      * @param plaintext A array of ints containing the plaintext to be encrypted
      * @return An array of ints containing the ciphertext
      */
@@ -148,6 +164,7 @@ public class Vigenere
         }
         return null;
     }
+
     /**
      * Converts the alphabetical characters of an array to their corresponding numerical represenation
      *
@@ -172,6 +189,7 @@ public class Vigenere
         }
         return streamOfInts;
     }
+
     /**
      * Converts a an array of ints to an array of characters by replacing its int with its corresponding character
      *
@@ -187,24 +205,25 @@ public class Vigenere
         }
         return chararray;
     }
+
     protected static void printCiphertext(char[] ciphertextChars, String filename)
     {
         try
         {
             PrintWriter writer = new PrintWriter(filename);
-            String plaintext = fileToString("deciphered.txt");
+            String decrypted = fileToString(plaintext);
             String ciphertext = "";
             int j = 0;
-            for (int i = 0; i < plaintext.length(); i++)
+            for (int i = 0; i < decrypted.length(); i++)
             {
-                if (Character.isLetter(plaintext.charAt(i)))
+                if (Character.isLetter(decrypted.charAt(i)))
                 {
                     ciphertext = ciphertext + ciphertextChars[j];
                     j++;
                 }
                 else
                 {
-                    ciphertext = ciphertext + plaintext.charAt(i);
+                    ciphertext = ciphertext + decrypted.charAt(i);
                 }
             }
             writer.print(ciphertext);
@@ -215,6 +234,7 @@ public class Vigenere
             System.out.println("File not found");
         }
     }
+
     protected static int[] vigenereDecrytpt(int[] key, int[] ciphertext)
     {
         int[] plaintext = new int[ciphertext.length];
@@ -242,24 +262,25 @@ public class Vigenere
         }
         return null;
     }
+
     protected static void printPlaintext(char[] plaintextChars, String filename)
     {
         try
         {
             PrintWriter writer = new PrintWriter(filename);
-            String ciphertext = fileToString("ciphertext.txt");
+            String encryptedText = fileToString(ciphertext);
             String plaintext = "";
             int j = 0;
-            for (int i = 0; i < ciphertext.length(); i++)
+            for (int i = 0; i < encryptedText.length(); i++)
             {
-                if (Character.isLetter(ciphertext.charAt(i)))
+                if (Character.isLetter(encryptedText.charAt(i)))
                 {
                     plaintext = plaintext + plaintextChars[j];
                     j++;
                 }
                 else
                 {
-                    plaintext = plaintext + ciphertext.charAt(i);
+                    plaintext = plaintext + encryptedText.charAt(i);
                 }
             }
             writer.print(plaintext);
