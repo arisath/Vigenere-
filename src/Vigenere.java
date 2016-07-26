@@ -259,4 +259,42 @@ public class Vigenere
         return ciphertext;
     }
 
+ protected static int[]  vigenereDecrytpt(int[] key, int[] ciphertext)
+    {
+        int[] plaintext = new int[ciphertext.length];
+
+        try
+        {
+            int i = 0;
+
+            while (i < ciphertext.length)
+            {
+                for (int j = 0; j < key.length; j++)
+                {
+
+                    plaintext[i] = ciphertext[i] - key[j];
+
+
+                    plaintext[i] = (plaintext[i]+26) % 26;
+
+
+                    i++;
+
+                    if (i == (plaintext.length))
+                    {
+                        break;
+                    }
+
+                }
+            }
+
+            return (plaintext);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
