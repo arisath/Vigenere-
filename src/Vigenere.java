@@ -25,10 +25,7 @@ public class Vigenere
 
             char[] ciph = convertStreamOfIntsToString(vigener);
 
-            String cipher = processVigenereOutput(ciph);
-
-            System.out.println(cipher);
-
+            processVigenereOutput(ciph);
 
         }
         catch (Exception e)
@@ -234,32 +231,43 @@ public class Vigenere
         return chararray;
     }
 
-    protected static String processVigenereOutput(char[] ciphertextChars)
+    protected static void processVigenereOutput(char[] ciphertextChars)
     {
-        String plaintext = fileToString("plaintext.txt");
-
-        String ciphertext = "";
-
-        int j = 0;
-
-        for (int i = 0; i < plaintext.length(); i++)
+        try
         {
-            if (Character.isLetter(plaintext.charAt(i)))
-            {
-                ciphertext = ciphertext + ciphertextChars[j];
+            PrintWriter writer = new PrintWriter("ciphertext.txt");
 
-                j++;
-            }
-            else
+            String plaintext = fileToString("plaintext.txt");
+
+            String ciphertext = "";
+
+            int j = 0;
+
+            for (int i = 0; i < plaintext.length(); i++)
             {
-                ciphertext = ciphertext + plaintext.charAt(i);
+                if (Character.isLetter(plaintext.charAt(i)))
+                {
+                    ciphertext = ciphertext + ciphertextChars[j];
+
+                    j++;
+                }
+                else
+                {
+                    ciphertext = ciphertext + plaintext.charAt(i);
+                }
             }
+
+            writer.print(ciphertext);
+
+            writer.close();
         }
-
-        return ciphertext;
+        catch (FileNotFoundException e)
+        {
+            System.out.println("File not found");
+        }
     }
 
- protected static int[]  vigenereDecrytpt(int[] key, int[] ciphertext)
+    protected static int[] vigenereDecrytpt(int[] key, int[] ciphertext)
     {
         int[] plaintext = new int[ciphertext.length];
 
@@ -275,7 +283,7 @@ public class Vigenere
                     plaintext[i] = ciphertext[i] - key[j];
 
 
-                    plaintext[i] = (plaintext[i]+26) % 26;
+                    plaintext[i] = (plaintext[i] + 26) % 26;
 
 
                     i++;
