@@ -83,12 +83,15 @@ public class Vigenere
             FileReader input = new FileReader(filename);
             BufferedReader br = new BufferedReader(input);
             String fileContents = "";
+            
             String line;
             while ((line = br.readLine()) != null)
             {
                 fileContents = fileContents + line + eol;
             }
+
             br.close();
+
             fileContents = fileContents.replace("\uFEFF", "");
             return fileContents;
         }
