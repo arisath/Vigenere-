@@ -1,0 +1,46 @@
+//package main.java.vigenere;
+//
+//import java.util.HashSet;
+//
+///**
+// * Created by aris on 7/27/2016.
+// */
+//public class VigenereAttack
+//{
+//    public static void main(String[] args)
+//    {
+//        char[] encryptedText = Vigenere.preprocessFile("ciphertext.txt");
+//
+//        String ciphertext = new String(encryptedText);
+//
+//        findPatternes(ciphertext,20);
+//    }
+//
+//    protected static void findPatternes(String ciphertext, int maximunPatternSize)
+//    {
+//        HashSet<String> set = new HashSet<String>();
+//
+//        for (int i = 0; i < ciphertext.length() - maximunPatternSize; i++)
+//        {
+//            String substring1 = ciphertext.substring(i, i + maximunPatternSize);
+//
+//            for (int j = 1; j < ciphertext.length() - maximunPatternSize; j++)
+//            {
+//                String substring2 = ciphertext.substring(j, j + maximunPatternSize);
+//
+//                if (substring1.equalsIgnoreCase(substring2) && (i != j))
+//                {
+//                    set.add(substring1);
+//                }
+//            }
+//        }
+//
+//        for (String s : set)
+//        {
+//            System.out.println(s);
+//        }
+//    }
+//
+//}
+//
+//
